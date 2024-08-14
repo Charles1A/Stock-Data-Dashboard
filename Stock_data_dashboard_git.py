@@ -73,11 +73,11 @@ def stock_data():
     # (1) the adjusted close dataframe transposed and (2) untransposed 
     # (3) the calendar date 180 trading days ago; 
     # (4) the calendar date of the last trading day
-    return adj_close_df.T, adj_close_df, adj_close_df.index[-181].strftime('%B %d, %Y'), adj_close_df.index[-1].strftime('%B %d, %Y')
+    return adj_close_df.T, adj_close_df, adj_close_df.index[-1].strftime('%B %d, %Y')
 
 def pct_change_func(stock_df): # Takes the dataframe returned by stock_data() as an argument
 
-    pct_chg_df = (stock_df.iloc[:, -1] - stock_df.iloc[:, -6])/stock_df.iloc[:, -6] # slices data for the last 5 trading days
+    pct_chg_df = (stock_df.iloc[:, -1] - stock_df.iloc[:, -5])/stock_df.iloc[:, -5] # slices data for the last 5 trading days
 
     # The above subsetting operation returns a series; need to convert back to a dataframe
 
@@ -85,21 +85,21 @@ def pct_change_func(stock_df): # Takes the dataframe returned by stock_data() as
 
     pct_chg_df.rename(columns={0: '5d'}, inplace=True)
 
-    pct_chg_df.index.name ='Lookback Period (Trading Days)'
+    pct_chg_df.index.name ='Lookback Period'
 
-    pct_chg_df['15d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-16])/stock_df.iloc[:,-16]# Computes percent change
-
-
-    pct_chg_df['25d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-26])/stock_df.iloc[:,-26]# Computes percent change
+    pct_chg_df['15d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-15])/stock_df.iloc[:,-15]# Computes percent change
 
 
-    pct_chg_df['45d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-46])/stock_df.iloc[:,-46]# Computes percent change
+    pct_chg_df['25d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-25])/stock_df.iloc[:,-25]# Computes percent change
 
 
-    pct_chg_df['90d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-91])/stock_df.iloc[:,-91]# Computes percent change
+    pct_chg_df['45d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-45])/stock_df.iloc[:,-45]# Computes percent change
 
 
-    pct_chg_df['120d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-121])/stock_df.iloc[:,-121]# Computes percent change
+    pct_chg_df['90d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-90])/stock_df.iloc[:,-90]# Computes percent change
+
+
+    pct_chg_df['120d'] = (stock_df.iloc[:,-1] - stock_df.iloc[:,-120])/stock_df.iloc[:,-120]# Computes percent change
 
 
     pct_chg_df = pct_chg_df.T
@@ -126,7 +126,7 @@ def pct_change_func(stock_df): # Takes the dataframe returned by stock_data() as
 
 def correlogram_func(stock_df):
 
-    pct_returns = stock_df.iloc[-lookback_days:,:].pct_change() # Computes percent change from the immediately previous row
+    pct_returns = stock_df.iloc[-lookback_days-1:,:].pct_change() # Computes percent change from the immediately previous row
 
     if index == 'Nasdaq':
 
@@ -182,11 +182,11 @@ if analysis == '-':
         """
         This dashboard displays two metrics to aid you in evaluating **up to four equities** side-by-side!
 
-        • Price movements as percentages over different time frames
+        • Price movements as percentages over different times
 
-        • Price movement correlations over different time frames
+        • Price movement correlations over different times
 
-        ##### To get started: provide the necessary inputs on the left.
+        ##### To get started, provide the necessary inputs in the sidebar (left)
 
         """
         )
@@ -233,9 +233,12 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
     s1 = dict(selector='td', \
         props=[('text-align', 'center')])
 
+    d1 = stock_data()[2]
+    d5 = stock_data()[1].index[-5].strftime('%B %d, %Y')
+
     table = pct_change_func(stock_data()[0]).style.format('{:.1%}') \
     .bar(align=0, vmin=-0.4, vmax=0.4, cmap='RdBu') \
-    .set_caption(f"Lookback period counts backward from most-recent U.S. market trading day: {stock_data()[3]}") \
+    .set_caption(f"Lookback period includes the specified number of closed U.S. market trading days (Example: 5d → {d5} to {d1})") \
     .set_table_attributes('style="border-collapse:collapse"') \
     .set_table_styles([s1, s2, s3, s4, s5, s6, s7, s8, s9]) \
     .to_html()
@@ -278,7 +281,7 @@ if analysis == 'Multi Correlation' and len(ticker_list) >= 2 and len(ticker_list
 
         start_date = stock_data()[1].index[-lookback_days].strftime('%B %d, %Y')
 
-        st.write(f"The selected lookback period covers {start_date} to {stock_data()[3]}")
+        st.write(f"The selected lookback period spans {start_date} to {stock_data()[2]}")
 
     with col2:
 
