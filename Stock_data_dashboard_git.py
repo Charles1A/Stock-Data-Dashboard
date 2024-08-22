@@ -182,9 +182,11 @@ if analysis == '-':
         """
         This dashboard displays two metrics to aid you in evaluating **up to four equities** side-by-side!
 
-        • Price movements as percentages over different times
+        • Price movements as percentages over different time ranges
 
-        • Price movement correlations over different times
+        • Price movement correlations over different time ranges
+
+        These data show how closely your tickers of interest move together -- potentially sparing you from duplicative research and stock purchases
 
         ##### To get started, provide the necessary inputs in the sidebar (left)
 
@@ -212,7 +214,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
 
     s7 = dict(selector='th.col_heading', \
         props=[('text-align', 'center'), ('font-size', '1.2em'), \
-        ('color', 'white'), ('background-color', '#40739e')])
+        ('color', 'white'), ('background-color', '#40739e'), ('border-left', '2px solid white')])
 
     s6 = dict(selector='th:not(.col_heading)', \
         props=[('color', 'white'), ('background-color', '#487eb0'), \
@@ -221,30 +223,29 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
     s5 = dict(selector='td:nth-child(2)', \
         props=[('border-left', '2px solid white')])
 
-    s4 = dict(selector='th:nth-child(3)', \
-        props=[('border-left', '2px solid white')])
+    s3 = dict(selector='td', \
+        props=[('border-left', '2px solid #40739e')])
 
-    s3 = dict(selector='td:nth-child(3)', \
-        props=[('border-left', '2px solid black')])
-
-    s2 = dict(selector='th, td', \
+    s2 = dict(selector='th', \
         props=[('border', 'none')])
 
+    # align cell text
     s1 = dict(selector='td', \
-        props=[('text-align', 'center')])
+        props=[('text-align', 'right')])
 
     d1 = stock_data()[2]
     d5 = stock_data()[1].index[-5].strftime('%B %d, %Y')
 
     table = pct_change_func(stock_data()[0]).style.format('{:.1%}') \
-    .bar(align=0, vmin=-0.4, vmax=0.4, cmap='RdBu') \
-    .set_caption(f"Lookback period includes the specified number of closed U.S. market trading days (Example: 5d → {d5} to {d1})") \
+    .bar(height=70, width=50, align='mid', vmin=-0.6, vmax=0.6, cmap='RdBu') \
     .set_table_attributes('style="border-collapse:collapse"') \
-    .set_table_styles([s1, s2, s3, s4, s5, s6, s7, s8, s9]) \
+    .set_table_styles([s1, s2, s3, s5, s6, s7, s8, s9]) \
     .to_html()
-    
-    st.write(f'{table}', unsafe_allow_html=True)
 
+    st.write(f"**Lookback period** includes the specified number of closed U.S. market trading days")
+    st.write(f"Example: **5d** shows change in price from market close on {d5} to market close {d1}")
+
+    st.write(f'{table}', unsafe_allow_html=True)
 
 # # --- # Correlation matrix
 
@@ -253,7 +254,7 @@ if analysis == 'Multi Correlation' and len(ticker_list) >= 2 and len(ticker_list
 
     st.markdown("""
 
-        <h1 style='text-align: center;'>Pearson\'s R correlations</h1> 
+        <h1 style='text-align: center;'>Stock Price Correlations</h1> 
 
                 """,
         unsafe_allow_html=True)
@@ -266,14 +267,16 @@ if analysis == 'Multi Correlation' and len(ticker_list) >= 2 and len(ticker_list
 
         st.markdown(
             ''' 
-            ► **R** signifies how strongly two variables are correlated and in which direction (negative or positive)
+            ► The values in the grid are **Pearson's R** correlation values
 
-            ► **R** values range from -1 to 1
+            ► Range from -1 to 1
+
+            ► Signify how strongly two variables are correlated and in which direction (negative or positive)
 
             '''
             )
 
-        lookback_days = st.slider(label = 'Lookback period: Select number of trading days to include in correlation computation', 
+        lookback_days = st.slider(label = 'Select the number of closed trading days to include in correlation computation', 
         min_value=5, 
         max_value=180, 
         value=90, 
@@ -281,7 +284,7 @@ if analysis == 'Multi Correlation' and len(ticker_list) >= 2 and len(ticker_list
 
         start_date = stock_data()[1].index[-lookback_days].strftime('%B %d, %Y')
 
-        st.write(f"The selected lookback period spans {start_date} to {stock_data()[2]}")
+        st.write(f"The selected lookback period includes {start_date} to {stock_data()[2]} (the most-recent closed trading day)")
 
     with col2:
 
