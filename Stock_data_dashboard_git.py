@@ -13,7 +13,10 @@ import time
 import re
 import matplotlib as mpl
 
-st.set_page_config(layout='wide', initial_sidebar_state='expanded')
+st.set_page_config(page_title="Stock Data Dashboard",
+    page_icon=":chart_with_upwards_trend:",
+    layout='wide', 
+    initial_sidebar_state='auto')
  
 
 # # --- # Sidebar elements
@@ -173,20 +176,22 @@ if analysis == '-':
 
         st.markdown("""
 
-        <h1 style='text-align: center;'>Stock Data Dashboard</h1> 
+        <h1 style='text-align: center;'>Stock & ETF Dashboard</h1> 
 
                 """,
         unsafe_allow_html=True)
 
         st.markdown(
         """
-        This dashboard displays two metrics to aid you in evaluating **up to four equities** side-by-side!
+        This dashboard displays two metrics to aid you in evaluating **up to four securities** side-by-side!
 
-        • Price movements as percentages over different time ranges
+        • **Multi Percent change**: Price movements expressed as percentages over different time ranges
 
-        • Price movement correlations over different time ranges
+        • **Multi Correlation**: Price movement correlations over different time ranges
 
-        These data show how closely your tickers of interest move together -- potentially sparing you from duplicative research and stock purchases
+        These data show how closely your tickers of interest move together -- potentially sparing you from redundant research and stock buys.
+
+        The analyses here use **adjusted close** prices, which factor in stock splits and dividends.
 
         ##### To get started, provide the necessary inputs in the sidebar (left)
 
@@ -199,7 +204,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
 
     st.markdown("""
 
-        <h1 style='text-align: center;'>Equity Price Changes</h1> 
+        <h1 style='text-align: center;'>Stock & ETF Price Changes</h1> 
 
                 """,
         unsafe_allow_html=True)
@@ -242,8 +247,8 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
     .set_table_styles([s1, s2, s3, s5, s6, s7, s8, s9]) \
     .to_html()
 
-    st.write(f"**Lookback period** includes the specified number of closed U.S. market trading days")
-    st.write(f"Example: **5d** shows change in price from market close on {d5} to market close {d1}")
+    st.write(f"**Lookback period**: the number of closed U.S. market trading days used in calculation")
+    st.write(f"Example: **5d** includes price data from {d5} to {d1}")
 
     st.write(f'{table}', unsafe_allow_html=True)
 
@@ -267,24 +272,22 @@ if analysis == 'Multi Correlation' and len(ticker_list) >= 2 and len(ticker_list
 
         st.markdown(
             ''' 
-            ► The values in the grid are **Pearson's R** correlation values
+            ► The grid shows **Pearson's R** correlation values
 
-            ► Range from -1 to 1
-
-            ► Signify how strongly two variables are correlated and in which direction (negative or positive)
+            ► They signify how strongly two securities are correlated (**Max value = 1**)
 
             '''
             )
 
         lookback_days = st.slider(label = 'Select the number of closed trading days to include in correlation computation', 
-        min_value=5, 
-        max_value=180, 
+        min_value=10, 
+        max_value=170, 
         value=90, 
-        step=15)
+        step=10)
 
         start_date = stock_data()[1].index[-lookback_days].strftime('%B %d, %Y')
 
-        st.write(f"The selected lookback period includes {start_date} to {stock_data()[2]} (the most-recent closed trading day)")
+        st.write(f"The selected lookback period spans {start_date} to {stock_data()[2]} (the most-recent closed trading day)")
 
     with col2:
 
