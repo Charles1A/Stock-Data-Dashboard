@@ -12,6 +12,7 @@ from datetime import datetime, timedelta, date
 import time
 import re
 import matplotlib as mpl
+import pytz
 
 st.set_page_config(page_title="Stock Data Dashboard",
     page_icon=":chart_with_upwards_trend:",
@@ -38,9 +39,10 @@ index = st.sidebar.selectbox(label='Select a benchmark index for comparison',
 analysis = st.sidebar.selectbox(label='Choose analysis to display', options = ['-', 'Multi Percent change', 'Multi Correlation'])
 
 # Start date and end date arguments for yf.download API:
-days_ago_270 = datetime.now() - timedelta(days=270) # computes date 270 calendar days ago
+tz = pytz.timezone("America/New_York")
+days_ago_270 = tz.localize(datetime.now()) - timedelta(days=270) # computes date 270 calendar days ago
 api_start_date = days_ago_270.strftime('%Y-%m-%d') # formats start date for yf.download API
-api_end_date = date.today().strftime('%Y-%m-%d') # formats end date for yf.download API
+api_end_date = tz.localize(date.today()).strftime('%Y-%m-%d') # formats end date for yf.download API
 
 # # --- # Function definitions
 
@@ -69,7 +71,7 @@ def stock_data():
     # and API_index_input, a local variable
     def yf_api_call(tickers, API_index_input): 
 
-        yf_stock_data = yf.download(f'{API_index_input} {tickers}', start=api_start_date, end=api_end_date)
+        yf_stock_data = yf.download(f'{API_index_input} {tickers}', start=api_start_date, end=api_end_date, auto_adjust=True)
 
         return yf_stock_data
 
