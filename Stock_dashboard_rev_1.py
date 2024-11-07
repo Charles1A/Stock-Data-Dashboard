@@ -37,7 +37,10 @@ index = st.sidebar.selectbox(label='Select a benchmark index for comparison',
 
 analysis = st.sidebar.selectbox(label='Choose analysis to display', options = ['-', 'Multi Percent change', 'Multi Correlation'])
 
-api_end_date = (datetime.now() - timedelta(hours=5)).strftime('%Y-%m-%d') # reformats end date for yf.download API
+date_52_wks = datetime.now() - timedelta(weeks=52)
+api_start_date = date_52_wks.strftime('%Y-%m-%d') # reformats start date for yf.download API
+UTC_EST_offset = datetime.now() - timedelta(hours=5) # this is to prevent api errors that occur due to Streamlit's UTC server
+api_end_date = UTC_EST_offset.strftime('%Y-%m-%d') # reformats end date for yf.download API
 
 # # --- # Function definitions
 
@@ -66,7 +69,7 @@ def stock_data():
     # and API_index_input, a local variable
     def yf_api_call(tickers, API_index_input): 
 
-        yf_stock_data = yf.download(f'{API_index_input} {tickers}', period='1y', end=api_end_date, interval='1d',)
+        yf_stock_data = yf.download(f'{API_index_input} {tickers}', start=api_start_date, end=api_end_date, interval='1d')
 
         return yf_stock_data
 
