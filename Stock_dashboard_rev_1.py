@@ -191,7 +191,7 @@ if analysis == '-':
 
         st.markdown(
         """
-        This dashboard displays two metrics to aid you in evaluating **up to four securities** side-by-side:
+        This dashboard displays two metrics to aid you in evaluating securities side-by-side:
 
         • **Multi Percent change**: Price movements expressed as percentages over different time ranges
 
@@ -199,7 +199,9 @@ if analysis == '-':
 
         These data show how closely your tickers of interest move together -- potentially sparing you from redundant research and stock buys.
 
-        The analyses displayed here use **adjusted close** prices, which factor in stock splits and dividends.
+        The analyses displayed here use **adjusted close** prices, which factor in stock splits and dividends. 
+        
+        *Note: Data may be delayed up to one day*
 
         """
         )
@@ -248,7 +250,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
     .set_table_styles([s1, s2, s3, s5, s6, s7, s8]) \
     .to_html()
 
-    st.write(f"**Lookback**: **d** denotes market trading days counted back from {d1} ")
+    st.write(f"Below, **d** denotes market trading days. These are counted backward from the most-recent market date available: {d1}.")
 
     st.write(f'{table}', unsafe_allow_html=True)
 
