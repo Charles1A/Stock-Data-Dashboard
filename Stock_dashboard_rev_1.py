@@ -37,8 +37,8 @@ index = st.sidebar.selectbox(label='Select a benchmark index for comparison',
 
 analysis = st.sidebar.selectbox(label='Choose analysis to display', options = ['-', 'Multi Percent change', 'Multi Correlation'])
 
-date_52_wks = datetime.now() - timedelta(weeks=52)
-api_start_date = date_52_wks.strftime('%Y-%m-%d') # reformats start date for yf.download API
+backdate_52_wks = datetime.now() - timedelta(weeks=52)
+api_start_date = backdate_52_wks.strftime('%Y-%m-%d') # reformats start date for yf.download API
 UTC_EST_offset = datetime.now() - timedelta(hours=5) # this is to prevent api errors that occur due to Streamlit's UTC server
 api_end_date = UTC_EST_offset.strftime('%Y-%m-%d') # reformats end date for yf.download API
 
