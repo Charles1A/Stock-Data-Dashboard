@@ -250,7 +250,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
     .set_table_styles([s1, s2, s3, s5, s6, s7, s8]) \
     .to_html()
 
-    st.write(f"Below, **d** denotes market trading days counted backward from {d1}. This is the most-recent closed market date with uploaded data for your tickers.")
+    st.write(f"Below, **d** denotes trading days counted backward from {d1}. This is the most-recent trading date with available data for your tickers.")
 
     st.write(f'{table}', unsafe_allow_html=True)
 
