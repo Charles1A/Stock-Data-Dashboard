@@ -189,7 +189,7 @@ if analysis == '-':
                 """,
         unsafe_allow_html=True)
 
-        st.image('/Users/cea/Desktop/Coding and Machine Learning/Python/Dashboards/landing_page_banner.png',
+        st.image('https://github.com/Charles1A/Stock-Data-Dashboard/blob/e67e034b1972875174973cf42b8f4e2a9522f5b5/landing_page_banner.png',
             caption="Left: relative price changes; Right: multi-correlation grid")
 
         st.markdown(
