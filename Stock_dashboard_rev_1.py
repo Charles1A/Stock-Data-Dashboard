@@ -189,6 +189,9 @@ if analysis == '-':
                 """,
         unsafe_allow_html=True)
 
+        st.image('/Users/cea/Desktop/Coding and Machine Learning/Python/Dashboards/landing_page_banner.png',
+            caption="Left: relative price changes; Right: multi-correlation grid")
+
         st.markdown(
         """
         This dashboard displays two metrics to aid you in evaluating securities side-by-side:
@@ -250,7 +253,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
     .set_table_styles([s1, s2, s3, s5, s6, s7, s8]) \
     .to_html()
 
-    st.write(f"Below, **d** denotes trading days counted backward from {d1}. This is the most-recent trading date with available data for your tickers.")
+    st.info(f"Below, **d** denotes trading days counted backward from {d1}. This is the most-recent trading date with available data for your tickers.")
 
     st.write(f'{table}', unsafe_allow_html=True)
 
