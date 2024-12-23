@@ -249,7 +249,7 @@ if analysis == '-':
                 """,
         unsafe_allow_html=True)
 
-        st.image('/Users/cea/Desktop/Coding and Machine Learning/Python/Projects/Streamlit stock dashboard/landing_page_banner.png',
+        st.image('https://github.com/Charles1A/Stock-Data-Dashboard/blob/d7d1f5c362b435b69495f2107f2cc3908f470784/landing_page_banner.png',
             caption="Left: percent price changes; Right: multi-correlation grid") # Need to replace the path with Github path
 
         st.markdown(
