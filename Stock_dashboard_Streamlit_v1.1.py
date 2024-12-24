@@ -249,7 +249,7 @@ if analysis == '-':
                 """,
         unsafe_allow_html=True)
 
-        st.image('landing_page_banner.png',
+        st.image('/Users/cea/Desktop/Coding and Machine Learning/Python/Projects/Streamlit stock dashboard/landing_page_banner.png',
             caption="Left: percent price changes; Right: multi-correlation grid") # Need to replace the path with Github path
 
         st.markdown(
@@ -274,13 +274,13 @@ if analysis == '-':
 
 if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_list) <= 4 and index != '-':
 
-    tab1, tab2 = st.tabs(["Pct Changes", "Pct Changes Relative to Index"])
+    tab1, tab2 = st.tabs(["Pct Changes", "Performance Relative to Index"])
 
     with tab1:
 
         st.markdown("""
 
-            <h1 style='text-align: center;'>Stock & ETF Price Change Comparison</h1> 
+            <h1 style='text-align: center;'>Price Change Comparison</h1> 
 
                     """,
             unsafe_allow_html=True)
@@ -318,7 +318,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
         .set_table_styles([s1, s2, s3, s5, s6, s7, s8]) \
         .to_html()
 
-        st.info(f"**d** under **Lookback** denotes trading days counted backward from {d1}. This is the most-recent trading date with available data for your tickers.")
+        st.info(f"*Below:* **'d'** denotes trading days counted backward from {d1}, the most-recent trading date with available data for your tickers.")
 
         st.write(f'{table}', unsafe_allow_html=True)
 
@@ -326,7 +326,9 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
 
         st.markdown("""
 
-        <h1 style='text-align: center;'>Stock & ETF Price Change Comparison</h1> 
+        <h1 style='text-align: center;'>Performance Relative to Index</h1>
+
+        <h6 style='text-align: center;'>Easily see whether your securities overperformed or underperformed the index</h6>
 
                 """,
         unsafe_allow_html=True)
@@ -364,7 +366,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
         .set_table_styles([s1, s2, s3, s5, s6, s7, s8]) \
         .to_html()
 
-        st.info(f"**d** under **Lookback** denotes trading days counted backward from {d1}. This is the most-recent trading date with available data for your tickers.")
+        # st.info(f"*Below:* **'d'** denotes trading days counted backward from {d1}, the most-recent trading date with available data for your tickers.")
 
         st.write(f'{table}', unsafe_allow_html=True)
 
