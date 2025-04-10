@@ -39,7 +39,7 @@ analysis = st.sidebar.selectbox(label='Choose analysis to display', options = ['
 
 backdate_52_wks = datetime.now() - timedelta(weeks=52)
 api_start_date = backdate_52_wks.strftime('%Y-%m-%d') # reformats start date for yf.download API
-UTC_EST_offset = datetime.now() - timedelta(hours=12) # this is to prevent api errors that occur due to Streamlit's UTC server
+UTC_EST_offset = datetime.now() - timedelta(days=1) # this is to prevent api errors that occur due to Streamlit's UTC server
 api_end_date = UTC_EST_offset.strftime('%Y-%m-%d') # reformats end date for yf.download API
 
 # # --- # Function definitions
