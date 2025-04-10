@@ -69,7 +69,7 @@ def stock_data():
     # and API_index_input, a local variable
     def yf_api_call(tickers, API_index_input): 
 
-        yf_stock_data = yf.download(f'{API_index_input} {tickers}', start=api_start_date, end=api_end_date, interval='1d')
+        yf_stock_data = yf.download(f'{API_index_input} {tickers}', start=api_start_date, end=api_end_date, interval='1d', auto_adjust=False)
 
         return yf_stock_data
 
