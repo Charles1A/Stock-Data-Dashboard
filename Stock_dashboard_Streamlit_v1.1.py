@@ -267,8 +267,8 @@ if analysis == '-':
         The analyses displayed here use **adjusted close** prices, which factor in stock splits and dividends. 
         
         <footer style='text-align: right;'>*Note 1: This app uses a free API; Price data may be delayed*</footer>
-        """
-        )
+        """,
+        unsafe_allow_html=True)
 
 # # --- # Percent changes
 
