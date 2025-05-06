@@ -256,11 +256,11 @@ if analysis == '-':
         """
         This dashboard displays two metrics to aid you in evaluating securities side-by-side:
 
-        **(1) Multi Percent change**: Price movements expressed as percentages over different time ranges
+        **→ Multi Percent change**: Price movements expressed as percentages over different time ranges
 
-            → gives option to show % price change or relative % price change
+            → †with option to show % price change or relative % price change
 
-        **(2) Multi Correlation**: Price movement correlations over different time ranges
+        **→ Multi Correlation**: Price movement correlations over different time ranges
 
         These data show how closely your tickers of interest move together -- potentially sparing you from redundant research and stock buys.
 
