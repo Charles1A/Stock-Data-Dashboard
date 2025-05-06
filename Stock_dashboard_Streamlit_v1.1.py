@@ -33,13 +33,13 @@ if len(ticker_list) == 1 or len(ticker_list) > 4:
 index_tuple = ('-', 'Nasdaq', 'DJIA', 'Russell', 'S&P500') # Tuple of benchmarks for the selectbox
 index = st.sidebar.selectbox(label='Select a benchmark index for comparison',
     options = index_tuple, 
-    placeholder = 'Select a relevant index')
+    placeholder = 'Select the relevant index')
 
 analysis = st.sidebar.selectbox(label='Choose analysis to display', options = ['-', 'Multi Percent change', 'Multi Correlation'])
 
 backdate_52_wks = datetime.now() - timedelta(weeks=52)
 api_start_date = backdate_52_wks.strftime('%Y-%m-%d') # reformats start date for yf.download API
-UTC_EST_offset = datetime.now() - timedelta(days=1) # this is to prevent api errors that occur due to Streamlit's UTC server
+UTC_EST_offset = datetime.now() - timedelta(hours=12) # this offset prevents api errors that can occur due to time zone difference with Streamlit's UTC server
 api_end_date = UTC_EST_offset.strftime('%Y-%m-%d') # reformats end date for yf.download API
 
 # # --- # Function definitions
@@ -247,26 +247,26 @@ if analysis == '-':
         <h1 style='text-align: center;'>Stock & ETF Comparison Dashboard</h1> 
 
                 """,
-        unsafe_allow_html=True)
+        unsafe_allow_html=True) # set to True so that the HTML is rendered rather than just displayed as text
 
         st.image('landing_page_banner.png',
-            caption="Left: percent price changes; Right: multi-correlation grid") # Need to replace the path with Github path
+            caption="Left: percent price changes; Right: multi-correlation grid") # image path must be Github path
 
         st.markdown(
         """
         This dashboard displays two metrics to aid you in evaluating securities side-by-side:
 
-        • **Multi Percent change**: Price movements expressed as percentages over different time ranges
+        **(1) Multi Percent change**: Price movements expressed as percentages over different time ranges
 
-            → two tabs give option to show absolute or relative price change
+            → gives option to show % price change or relative % price change
 
-        • **Multi Correlation**: Price movement correlations over different time ranges
+        **(2) Multi Correlation**: Price movement correlations over different time ranges
 
         These data show how closely your tickers of interest move together -- potentially sparing you from redundant research and stock buys.
 
         The analyses displayed here use **adjusted close** prices, which factor in stock splits and dividends. 
         
-        *Note: Price data may be delayed up to one day*
+        <footer style='text-align: right;'>*Note 1: This app uses a free API; Price data may be delayed*</footer>
         """
         )
 
@@ -318,7 +318,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
         .set_table_styles([s1, s2, s3, s5, s6, s7, s8]) \
         .to_html()
 
-        st.info(f"*Below:* **'d'** denotes trading days counted backward from {d1}, the most-recent trading date with available data for your tickers.")
+        st.info(f"**'d'** denotes trading days counted backward from {d1}, the most-recent trading date for which data have been retrieved.")
 
         st.write(f'{table}', unsafe_allow_html=True)
 
@@ -328,7 +328,7 @@ if analysis == 'Multi Percent change' and len(ticker_list) >= 2 and len(ticker_l
 
         <h1 style='text-align: center;'>Performance Relative to Index</h1>
 
-        <h6 style='text-align: center;'>Easily see whether your securities overperformed or underperformed the index</h6>
+        <h6 style='text-align: center;'>See whether your securities overperformed or underperformed the index</h6>
 
                 """,
         unsafe_allow_html=True)
@@ -404,7 +404,7 @@ if analysis == 'Multi Correlation' and len(ticker_list) >= 2 and len(ticker_list
 
         lookback_date = stock_data()[0].index[-lookback_days].strftime('%B %d, %Y')
 
-        st.write(f"The selected lookback period spans {lookback_date} to {stock_data()[1]} (the most-recent closed trading day with uploaded data)")
+        st.write(f"The selected lookback period spans {lookback_date} to {stock_data()[1]} (the most-recent trading date for which data were retreived)")
 
     with col2:
 
