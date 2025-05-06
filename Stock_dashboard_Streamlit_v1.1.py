@@ -256,17 +256,19 @@ if analysis == '-':
         """
         This dashboard displays two metrics to aid you in evaluating securities side-by-side:
 
+        <div>
         **(1) Multi Percent change**: Price movements expressed as percentages over different time ranges
 
             → gives option to show % price change or relative % price change
 
         **(2) Multi Correlation**: Price movement correlations over different time ranges
+        </div>
 
         These data show how closely your tickers of interest move together -- potentially sparing you from redundant research and stock buys.
 
         The analyses displayed here use **adjusted close** prices, which factor in stock splits and dividends. 
         
-        <footer style='text-align: right;'>*Note 1: This app uses a free API; Price data may be delayed*</footer>
+        <footer style='text-align: right;'>*Note: This app uses a free API; Price data may be delayed*</footer>
         """,
         unsafe_allow_html=True)
 
