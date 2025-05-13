@@ -268,8 +268,7 @@ def up_down_func(stock_df):
     # This will enable us to tabulate the number of days the stock  moved up or down
 
     up_down_df = stock_df.map(lambda x: "Up" if x > 0 else "Down") # use .map to apply the lambda function elementwise to df
-
-    st.dataframe(up_down_df)
+    
 
     result =[]
 
@@ -289,7 +288,6 @@ def up_down_func(stock_df):
     df.drop(df.columns[0], axis=1, inplace=True)
 
     # st.write(df) # un-comment to confirm correct structure of dataframe
-
 
 
     fig, axes = plt.subplots(len(df), 1, figsize=(8, 0.8 * len(df)), sharex=True)
