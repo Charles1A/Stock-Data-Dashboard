@@ -332,7 +332,7 @@ if analysis == '-':
         unsafe_allow_html=True) # set to True so that the HTML is rendered rather than just displayed as text
 
         # Note! change image path based on local or Github location
-        st.image('https://github.com/Charles1A/Stock-Data-Dashboard/blob/1ca0bf0e5e3d0c2fa1ec99b5b42e662a72dab90c/landing_page_banner.png',
+        st.image('landing_page_banner.png',
             caption="Left: percent price changes; Right: multi-correlation grid")
 
         st.markdown(
