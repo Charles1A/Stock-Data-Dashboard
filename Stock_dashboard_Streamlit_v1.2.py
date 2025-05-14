@@ -507,12 +507,12 @@ if analysis == 'Ratio: Days Up vs Down' and len(ticker_list) >= 2 and len(ticker
 
     st.markdown("""
 
-    <h1 style='text-align: center;'>Percentage of Days Closed Up and Days Closed Down</h1> 
+    <h1 style='text-align: center;'>Percentage of Days Up versus Down</h1> 
 
             """,
     unsafe_allow_html=True)
 
-    lookback_days = st.slider(label = 'Use the slider to select the number of elapsed trading days to include', 
+    lookback_days = st.slider(label = 'Use the slider to select the number of elapsed trading days to include in the calculation', 
     min_value=10, 
     max_value=170, 
     value=90, 
@@ -520,7 +520,7 @@ if analysis == 'Ratio: Days Up vs Down' and len(ticker_list) >= 2 and len(ticker
 
     lookback_date = stock_data()[0].index[-lookback_days].strftime('%B %d, %Y')
 
-    st.write(f"The selected lookback period spans {lookback_date} to {stock_data()[1]} (the most-recent trading date for which data were retreived)")
+    st.write(f"The selected lookback period spans {lookback_date} to {stock_data()[1]} (the most-recent trading date for which data were retrieved)")
 
     up_down_func(stock_data()[0])
 
