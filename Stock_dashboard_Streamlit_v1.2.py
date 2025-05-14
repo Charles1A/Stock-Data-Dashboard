@@ -342,7 +342,7 @@ if analysis == '-':
 
             → Multi Correlation: Price movement correlations over different time ranges
 
-            → Percentage of Days Closed Up and Days Closed Down
+            → Percentage of Days Up versus Down
 
         These data show how closely your tickers of interest move together -- sparing you from redundant research and stock buys.
 
